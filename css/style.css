@@ -26,21 +26,22 @@ body{
 
 :root{
 
-    --bg:#0B1120;
-    --card:#111827;
+  --bg:#070B14;
+  --bg-secondary:#0F172A;
 
-    --primary:#2563EB;
-    --primary-light:#3B82F6;
+  --card:rgba(17,24,39,.65);
 
-    --text:#ffffff;
-    --muted:#94A3B8;
+  --primary:#2563EB;
+  --primary-light:#60A5FA;
 
-    --border:rgba(255,255,255,.08);
+  --purple:#7C3AED;
 
-    --radius:20px;
+  --text:#FFFFFF;
+  --muted:#94A3B8;
 
-    --shadow:
-    0 10px 30px rgba(0,0,0,.25);
+  --border:rgba(255,255,255,.08);
+
+  --radius:24px;
 
 }
 
@@ -49,7 +50,7 @@ body{
 ========================= */
 
 section{
-    padding:100px 8%;
+    padding:0.5px 8%;
 }
 
 h1{
@@ -73,6 +74,33 @@ a{
 img{
     max-width:100%;
     display:block;
+}
+
+.section-header{
+
+    max-width:800px;
+
+    margin:auto;
+
+    text-align:center;
+
+}
+
+.section-tag{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    background:
+    rgba(37,99,235,.12);
+
+    color:#60A5FA;
+
+    margin-bottom:18px;
+
 }
 
 /* =========================
@@ -164,6 +192,12 @@ img{
     padding:18px 8%;
 }
 
+.navbar-scrolled {
+    backdrop-filter: blur(16px);
+    background: rgba(7,11,20,.85);
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
 .logo-container{
 
     display:flex;
@@ -211,10 +245,36 @@ img{
     text-align:center;
 
     position:relative;
+    overflow:hidden;
 
+    padding:20px 20px 20px;
 }
 
 /* glow */
+
+@keyframes floatOne{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(40px);
+    }
+
+}
+
+@keyframes floatTwo{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-35px);
+    }
+
+}
 
 .hero::before{
 
@@ -222,19 +282,55 @@ img{
 
     position:absolute;
 
-    width:700px;
-    height:700px;
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
 
     background:
     radial-gradient(
         circle,
-        rgba(37,99,235,.18),
+        rgba(37,99,235,.25),
         transparent 70%
     );
 
     top:-150px;
+    left:-100px;
 
-    z-index:-1;
+    filter:blur(60px);
+
+    animation:
+    floatOne 12s ease-in-out infinite;
+    pointer-events:none;
+
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(124,58,237,.18),
+        transparent 70%
+    );
+
+    right:-100px;
+    bottom:-100px;
+
+    filter:blur(70px);
+
+    animation:
+    floatTwo 15s ease-in-out infinite;
+    pointer-events:none;
 
 }
 
@@ -305,6 +401,29 @@ img{
 
 }
 
+.hero > *{
+    position:relative;
+    z-index:2;
+}
+
+.learning-paths span{
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    color:#CBD5E1;
+
+    font-size:.9rem;
+
+}
+
 /* =========================
    CARDS
 ========================= */
@@ -325,32 +444,66 @@ img{
 .card{
 
     background:
-    rgba(17,24,39,.8);
+    rgba(15,23,42,.55);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:
+    blur(16px);
 
     border:
-    1px solid var(--border);
+    1px solid rgba(255,255,255,.08);
 
-    border-radius:
-    var(--radius);
+    border-radius:24px;
 
-    padding:28px;
+    padding:30px;
 
-    transition:.3s ease;
+    transition:.35s ease;
 
 }
 
 .card:hover{
 
     transform:
-    translateY(-6px);
+    translateY(-8px);
 
     border-color:
-    rgba(59,130,246,.4);
+    rgba(37,99,235,.35);
+
+    box-shadow:
+    0 15px 40px rgba(37,99,235,.15);
 
 }
 
+.vision-card{
+
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:center;
+
+    padding:60px;
+
+    border-radius:32px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(37,99,235,.08),
+        rgba(124,58,237,.08)
+    );
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+.ecosystem-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
 /* =========================
    ROADMAP
 ========================= */
@@ -539,11 +692,14 @@ img{
 footer{
 
     border-top:
-    1px solid var(--border);
+    1px solid rgba(255,255,255,.08);
+
+    padding:60px 20px;
 
     text-align:center;
 
-    padding:40px 20px;
+    background:
+    #05080F;
 
 }
 
@@ -605,17 +761,34 @@ footer p{
 
     }
 
+    hero h1{
+
+        font-size:2.8rem;
+
+    }
+
+    .vision-card{
+
+        padding:35px 25px;
+
+    }
+
+    .cards-grid{
+
+        grid-template-columns:1fr;
+
+    }
 }
 
-.hidden{
-    opacity:0;
-    transform:translateY(40px);
-    transition:all .8s ease;
+.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all .8s ease;
 }
 
-.show{
-    opacity:1;
-    transform:translateY(0);
+.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .btn-primary,
@@ -651,3 +824,40 @@ footer p{
     }
 
 }
+
+.status{
+
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    font-size:.75rem;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:
+    rgba(37,99,235,.15);
+
+    color:#60A5FA;
+
+}
+
+.community{
+
+    text-align:center;
+
+    padding:120px 8%;
+
+    background:
+    linear-gradient(
+        180deg,
+        transparent,
+        rgba(37,99,235,.05)
+    );
+
+}
+
+

@@ -1,162 +1,193 @@
 /* =====================================
-FAQ ACCORDION
+   FAQ ACCORDION
 ===================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-```
-const faqItems = document.querySelectorAll(".faq-item");
+    const faqItems = document.querySelectorAll(".faq-item");
 
-faqItems.forEach(item => {
+    faqItems.forEach(item => {
 
-    const button = item.querySelector("button");
+        const button = item.querySelector("button");
+        const answer = item.querySelector(".faq-answer");
 
-    const answer = item.querySelector(".faq-answer");
+        if (!button || !answer) return;
 
-    if (!answer) return;
+        answer.style.maxHeight = "0px";
 
-    answer.style.maxHeight = "0px";
+        button.addEventListener("click", () => {
 
-    button.addEventListener("click", () => {
+            const isOpen = item.classList.contains("active");
 
-        const isOpen = item.classList.contains("active");
+            faqItems.forEach(faq => {
 
-        faqItems.forEach(faq => {
+                faq.classList.remove("active");
 
-            faq.classList.remove("active");
+                const content =
+                    faq.querySelector(".faq-answer");
 
-            const content = faq.querySelector(".faq-answer");
+                if (content) {
+                    content.style.maxHeight = "0px";
+                }
 
-            if (content) {
-                content.style.maxHeight = "0px";
+            });
+
+            if (!isOpen) {
+
+                item.classList.add("active");
+
+                answer.style.maxHeight =
+                    answer.scrollHeight + "px";
             }
 
         });
 
-        if (!isOpen) {
-
-            item.classList.add("active");
-
-            answer.style.maxHeight =
-                answer.scrollHeight + "px";
-
-        }
-
     });
 
 });
-```
 
-});
 
 /* =====================================
-NAVBAR SHADOW ON SCROLL
+   NAVBAR SHADOW
 ===================================== */
 
 const navbar = document.querySelector(".navbar");
 
-window.addEventListener("scroll", () => {
+if (navbar) {
 
-```
-if (window.scrollY > 50) {
+    window.addEventListener("scroll", () => {
 
-    navbar.style.boxShadow =
-        "0 10px 30px rgba(0,0,0,0.25)";
+        if (window.scrollY > 40) {
 
-} else {
+            navbar.classList.add("navbar-scrolled");
 
-    navbar.style.boxShadow = "none";
+        } else {
 
-}
-```
-
-});
-
-/* =====================================
-SCROLL REVEAL ANIMATION
-===================================== */
-
-const revealElements = document.querySelectorAll(
-".card, .timeline-item, .course-card, .faq-item"
-);
-
-const revealObserver = new IntersectionObserver(
-
-```
-entries => {
-
-    entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-            entry.target.classList.add("show");
+            navbar.classList.remove("navbar-scrolled");
 
         }
 
     });
 
-},
-
-{
-    threshold: 0.15
 }
-```
+
+
+/* =====================================
+   SCROLL REVEAL
+===================================== */
+
+const revealElements = document.querySelectorAll(`
+    .card,
+    .timeline-item,
+    .course-card,
+    .faq-item,
+    .vision-card,
+    .community,
+    .section-header,
+    .hero-content,
+    .learning-paths
+`);
+
+const revealObserver = new IntersectionObserver(
+
+    (entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("show");
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold: 0.15
+    }
 
 );
 
 revealElements.forEach(el => {
 
-```
-el.classList.add("hidden");
+    el.classList.add("hidden");
 
-revealObserver.observe(el);
-```
+    revealObserver.observe(el);
 
 });
+
 
 /* =====================================
-BUTTON RIPPLE EFFECT
+   SMOOTH SCROLL
 ===================================== */
 
-const buttons = document.querySelectorAll(
-".btn-primary, .btn-secondary"
-);
+document.querySelectorAll('a[href^="#"]')
+.forEach(anchor => {
 
-buttons.forEach(button => {
+    anchor.addEventListener("click", function (e) {
 
-```
-button.addEventListener("click", function (e) {
+        const target =
+            document.querySelector(
+                this.getAttribute("href")
+            );
 
-    const ripple =
-        document.createElement("span");
+        if (!target) return;
 
-    const rect =
-        this.getBoundingClientRect();
+        e.preventDefault();
 
-    const size =
-        Math.max(rect.width, rect.height);
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-    ripple.style.width =
-        ripple.style.height =
-        size + "px";
-
-    ripple.style.left =
-        e.clientX - rect.left - size / 2 + "px";
-
-    ripple.style.top =
-        e.clientY - rect.top - size / 2 + "px";
-
-    ripple.classList.add("ripple");
-
-    this.appendChild(ripple);
-
-    setTimeout(() => {
-
-        ripple.remove();
-
-    }, 600);
+    });
 
 });
-```
 
-});
+
+/* =====================================
+   HERO FLOAT EFFECT
+===================================== */
+
+const hero = document.querySelector(".hero");
+
+if (hero) {
+
+    hero.addEventListener("mousemove", (e) => {
+
+        const x =
+            (window.innerWidth / 2 - e.clientX) / 40;
+
+        const y =
+            (window.innerHeight / 2 - e.clientY) / 40;
+
+        hero.style.setProperty(
+            "--mouse-x",
+            `${x}px`
+        );
+
+        hero.style.setProperty(
+            "--mouse-y",
+            `${y}px`
+        );
+
+    });
+
+}
+
+
+/* =====================================
+   CURRENT YEAR
+===================================== */
+
+const yearElement =
+    document.querySelector(".current-year");
+
+if (yearElement) {
+
+    yearElement.textContent =
+        new Date().getFullYear();
+
+}
